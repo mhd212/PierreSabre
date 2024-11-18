@@ -4,16 +4,20 @@ public class Humain {
 	private String nom;
 	private String boisson;
 	protected int argent;
+	private Humain[] memoire; 
+	private int memoireIndex;
 	
 	public Humain(String nom, String boisson , int argent) {
 
 		this.nom = nom;
 		this.boisson = boisson;
 		this.argent = argent;
+		this.memoire = new Humain[30]; 
+        this.memoireIndex = 0;
 	}
 	
 	protected String parler1(String texte) {
-        System.out.println("(" + nom + ") - " + texte); // Affichage du message
+        System.out.println("(" + nom + ") - " + texte); // 
 		return texte;
     }
 
@@ -50,8 +54,29 @@ public class Humain {
         }
     }
 
-    
+    public void faireConnaissanceAvec(Humain autreHumain) {
+        this.direBonjour();
+        autreHumain.direBonjour();
+        this.memoriser(autreHumain);
+        autreHumain.memoriser(this);
+    }
+
+    private void memoriser(Humain humain) {
+        memoire[memoireIndex] = humain;
+        memoireIndex = (memoireIndex + 1) % memoire.length; 
+    }
+
+    public void listerConnaissance() {
+        System.out.print("(" + nom + ") - Je connais beaucoup de monde dont : ");
+        for (Humain h : memoire) {
+            if (h != null) {
+                System.out.print(h.nom + ", ");
+            }
+        }
+        System.out.println();
+    }
 }
+
 	
 	
 	
